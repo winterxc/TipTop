@@ -9,13 +9,13 @@
 
 ;(function($, window, document, undefined){
 
-    var pluginName = 'tipTop',
-        defaults = {
-        	offsetVertical: 10, // Vertical offset
-        	offsetHorizontal: 10  // Horizontal offset
-        };
+    var pluginName = 'imgtip',
+    defaults = {
+    	offsetVertical: 10, // Vertical offset
+        offsetHorizontal: 10  // Horizontal offset
+    };
 
-    function TipTop(element, options){
+    function ImgTip(element, options){
         this.el = element;
         this.$el = $(this.el);
         this.options = $.extend({}, defaults, options);
@@ -23,21 +23,26 @@
         this.init();
     }
 
-    TipTop.prototype = {
+    ImgTip.prototype = {
 
         init: function(){
         	var $this = this;
 
 			this.$el.mouseenter(function(){
 				var title = $(this).attr('title'),
-					tooltip = $('<div class="tiptop"></div>').text(title);
+				img = $(this).data('imgtip'),
+				tooltip = $('<div class="imgtip"></div>').html('<img src="'+imgtip+'">'+title).css({
+					position: absolute,
+					"z-index": 9999,
+					"max-width": 300,
+				});
 				tooltip.appendTo('body');
 				$(this).data('title', title).removeAttr('title');
 			}).mouseleave(function(){
-				$('.tiptop').remove();
+				$('.imgtip').remove();
 				$(this).attr('title', $(this).data('title'));
 			}).mousemove(function(e) {
-				var tooltip = $('.tiptop'),
+				var tooltip = $('.imgtip'),
 					top = e.pageY + $this.options.offsetVertical,
 					bottom = 'auto'
 					left = e.pageX + $this.options.offsetHorizontal,
@@ -52,7 +57,7 @@
 					left = 'auto';
 				}
 
-				$('.tiptop').css({ 'top': top, 'bottom': bottom, 'left': left, 'right': right });
+				$('.imgtip').css({ 'top': top, 'bottom': bottom, 'left': left, 'right': right });
 			});
 
         }
@@ -62,7 +67,7 @@
     $.fn[pluginName] = function(options){
         return this.each(function(){
             if(!$.data(this, pluginName)){
-                $.data(this, pluginName, new TipTop(this, options));
+                $.data(this, pluginName, new ImgTip(this, options));
             }
         });
     };
