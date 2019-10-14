@@ -31,7 +31,7 @@
 			this.$el.mouseenter(function(){
 				var src = $(this).attr('src'),
 				tooltip = $('<div class="imgtip"></div>').html('<img src="'+src+'">').css({
-					position: absolute,
+					position: 'absolute',
 					"z-index": 9999,
 					"max-width": 300,
 				});
