@@ -29,18 +29,15 @@
         	var $this = this;
 
 			this.$el.mouseenter(function(){
-				var title = $(this).attr('title'),
-				img = $(this).data('imgtip'),
-				tooltip = $('<div class="imgtip"></div>').html('<img src="'+imgtip+'">'+title).css({
+				var src = $(this).attr('src'),
+				tooltip = $('<div class="imgtip"></div>').html('<img src="'+src+'">').css({
 					position: absolute,
 					"z-index": 9999,
 					"max-width": 300,
 				});
 				tooltip.appendTo('body');
-				$(this).data('title', title).removeAttr('title');
 			}).mouseleave(function(){
 				$('.imgtip').remove();
-				$(this).attr('title', $(this).data('title'));
 			}).mousemove(function(e) {
 				var tooltip = $('.imgtip'),
 					top = e.pageY + $this.options.offsetVertical,
